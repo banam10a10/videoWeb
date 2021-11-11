@@ -1,0 +1,45 @@
+{% extends 'Home/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+<h2 class="title text-center">Login</h2>
+    <div>
+        <form method="post">
+           {% csrf_token %}
+        <div class="input-group">
+            <label class="label">Username</label>
+            {{ f.username | add_class:'input--style-4' }}
+        </div>
+        <div class="input-group">
+            <label class="label">Password</label>
+            {{ f.password | add_class:'input--style-4' }}
+        </div>
+        {% for mess in messages  %}
+            <p>{{ mess }}</p>
+        {% endfor %}
+        <div class="p-t-15">
+            <button class="btn btn-info" type="submit">Login</button>
+        </div>
+        <p>Already haven't an account? <a href="{% url 'register' %}">Register</a></p>
+        </form>
+
+    </div>
+    </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<script src="{% static 'Auth/vendor/jquery/jquery.min.js' %}"></script>
+<!-- Vendor JS-->
+<script src="{% static 'Auth/vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'Auth/vendor/datepicker/moment.min.js' %}"></script>
+<script src="{% static 'Auth/vendor/datepicker/daterangepicker.js' %}"></script>
+<!-- Main JS-->
+<script src="{% static 'Auth/js/global.js' %}"></script>
+{% endblock %}

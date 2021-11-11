@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home</title>
+
+    <link href="{% static 'Home/css/font-awesome.min.css' %}" rel="stylesheet">
+	<link href="{% static 'Home/css/responsive.css' %}" rel="stylesheet">
+    <link href="{% static 'Home/css/MainShop.css' %}" rel="stylesheet">
+    <link href="{% static 'Home/css/site.css' %}" rel="stylesheet">
+    <link href="{% static 'Home/css/Core1.css' %}" rel="stylesheet">
+
+    <link href="{% static 'Auth/vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'Auth/vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'Auth/vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'Auth/vendor/datepicker/daterangepicker.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'Auth/css/main.css' %}" rel="stylesheet" media="all">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/cc95e8893e.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head><!--/head-->
+
+<body>
+    <div class="header-middle" style="padding-top: 1rem"><!--header-middle-->
+        <div class="d-flex justify-content-center">
+            <div class="col-sm-4">
+                <div class="logo float-left">
+                    <a href="{% url 'home' %}"><img src="{% static 'Home/images/home/logo.png' %}" alt="" /></a>
+                </div>
+            </div>
+            <div class="col-sm-4 text-center" style="display: flex;justify-content: center;">
+                <form action="{% url 'search' %}"  method="get" style="display: -webkit-box;">
+                    <div class="form-group " style="padding-right: 5px">
+                        <input type="text" name="v" class="form-control" value="{{ v }}" >
+                    </div>
+                    <button type="submit" class="btn btn-info ">Tìm kiếm</button>
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <div class="shop-menu pull-right">
+                    <ul class="nav navbar-nav d-inline">
+                        {% if not request.user.is_authenticated %}
+                            <li class="nav-item"><a href="{% url 'register' %}"><i class="fa fa-lock"></i> Register</a></li>
+                            <li class="nav-item"><a href="{% url 'login' %}"><i class="fa fa-lock"></i> Login</a></li>
+                        {% else %}
+                            <li class="nav-item"><a href="">{{ request.user }}</a></li>
+                            <li class="nav-item"><a href="{% url 'logout' %}">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!--/header-middle-->
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="{% static 'Home/js/jquery.js' %}"></script>
+	<script src="{% static 'Home/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'Home/js/jquery.scrollUp.min.js' %}"></script>
+	<script src="{% static 'Home/js/price-range.js' %}"></script>
+    <script src="{% static 'Home/js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'Home/js/main.js' %}"></script>
+    <script src="{% static 'Home/js/main.js' %}"></script>
+</body>
+</html>

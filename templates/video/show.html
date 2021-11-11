@@ -1,0 +1,111 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-9 pl-5">
+        <video id="video" width="100%" controls >
+            <source src="{{ data.Location.url }}" type="video/mp4">
+        </video>
+        <h4>{{ data.Title }}</h4>
+        <div class="row" >
+            <div class="col">
+                <i class="float-left">{{ data.view }} lượt xem</i>
+                <div class="float-right">
+                    <button id="like_button" class="btn btn-light" value="{{ data.id }}" name="like"><i id="like_icon" class="far fa-thumbs-up"> {{ data.total_like }}</i> </button>
+                    <button class="btn btn-light" onclick="addview()"><i class="far fa-thumbs-down"></i> {{ data.total_dislike }} </button>
+                </div>
+            </div>
+        </div>
+        <div class="row p-t-15" style="border-top: rgb(168,160,160) 1px solid">
+            <div class="col-sm-1" style="padding: 0">
+                <a href="">
+                    <img src="{{ user.avatar.url }}" class="rounded-circle img-thumbnail" alt="" >
+                </a>
+            </div>
+            <div class="col-sm-10" style="display: flex;align-items: center">
+                <a href="">
+                    <h6 style="color: black">{{ user.username }}</h6>
+                </a>
+            </div>
+        </div>
+        <div id="description" style="margin-left: 8.333333333333332%;height: 100px; overflow: hidden">
+            <span style="white-space: pre-wrap;">{{ data.Description }}</span>
+        </div>
+        <button id="btn-more" class="btn btn-light" style="margin-left: 8.333333333333332%;" onclick="more()">Xem thêm</button>
+    </div>
+    <div class="col-sm-3">
+        {% for i in randomVideo %}
+            <div class="card" style="width: 18rem;">
+                <a href="{% url 'show' id=i.id %}">
+                    <img class="card-img-top" src="{{ i.Thumbnail.url }}" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-2 " style="padding: 0">
+                          <a href="" ><img class="rounded-circle img-thumbnail" src="{{ i.User.avatar.url }}" width="100%"></a>
+                      </div>
+                      <div class="col-sm-10">
+                          <a href="{% url 'show' id=i.id %}" style="color: black">
+                              <h6 class="card-title">{{ i.Title}}</h6>
+                          </a>
+                          <p class="card-text"><i>{{ i.view }} lượt xem</i></p>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<script>
+    var vid = document.getElementById('video');
+    var like_button = document.getElementById('like_button');
+    var like_icon = document.getElementById('like_icon');
+
+    vid.addEventListener("ended", function() {
+        $.get('{% url "addview" id=data.id %}', function (data){
+        });
+    });
+
+
+    function more(){
+        document.getElementById('description').style.overflow= "visible";
+        document.getElementById('description').style.height= "auto";
+        document.getElementById('btn-more').innerHTML = "Rút gọn";
+        document.getElementById('btn-more').onclick = function () {cut()};
+    }
+
+    function cut(){
+        document.getElementById('description').style.overflow= "hidden";
+        document.getElementById('description').style.height= "100px";
+        document.getElementById('btn-more').innerHTML = "Xem thêm";
+        document.getElementById('btn-more').onclick = function () {more()};
+    }
+
+    $('#like_button').click(function(){
+        $.ajax({
+            type: "POST",
+            url:"{% url 'like' id=data.id %}",
+            data:{'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            dataType: "json",
+            success: function(response) {
+                if (response === 0){
+                    alert("can dang nhap");
+                }
+                else if(response === 1){
+                    alert("you disliked it");
+                }else {
+                    alert("like")
+                }
+
+            },
+            error: function(rs, e) {
+                   alert(rs.responseText);
+            }
+        });
+    })
+
+
+</script>
+{% endblock %}

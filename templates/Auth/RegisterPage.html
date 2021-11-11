@@ -1,0 +1,102 @@
+{% extends 'Home/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title text-center">Register</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <label class="label">Username</label>
+                            {{ f.username|add_class:'input--style-4' }}
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <label class="label">Password</label>
+                                    {{f.password1|add_class:'input--style-4'}}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <label class="label">Confirm Password</label>
+                                    {{f.password2|add_class:'input--style-4'}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <label class="label">first name</label>
+                                    {{f.first_name|add_class:'input--style-4'}}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <label class="label">last name</label>
+                                    {{f.last_name|add_class:'input--style-4'}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <label class="label">Birthday</label>
+                                    <div class="input-group-icon">
+                                        {{f.birthday|add_class:'input--style-4 js-datepicker'}}
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group" style="display: block">
+                                    <label class="label">Gender</label>
+                                    <div class="rs-select2 js-select-simple select--no-search">
+                                        {{f.sex|add_class:'input--style-4'}}
+                                    <div class="select-dropdown"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <label class="label">Email</label>
+                                    {{f.email|add_class:'input--style-4'}}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <label class="label">Phone Number</label>
+                                    {{f.phone_number|add_class:'input--style-4'}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="label">Address</label>
+                            {{ f.address|add_class:'input--style-4' }}
+                        </div>
+                        {{ f.errors }}
+                        <div class="p-t-15">
+                            <button class="btn btn-info btn--radius-2 btn--blue" type="submit">Register</button>
+                        </div>
+                    </form>
+                    <p>Already have an account? <a href="{% url 'login'  %} ">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script src="{% static 'Auth/vendor/jquery/jquery.min.js' %}"></script>
+<!-- Vendor JS-->
+<script src="{% static 'Auth/vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'Auth/vendor/datepicker/moment.min.js' %}"></script>
+<script src="{% static 'Auth/vendor/datepicker/daterangepicker.js' %}"></script>
+<!-- Main JS-->
+<script src="{% static 'Auth/js/global.js' %}"></script>
+{% endblock %}
