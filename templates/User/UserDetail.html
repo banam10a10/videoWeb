@@ -1,0 +1,65 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="row " style="position: relative">
+        <div style="position: absolute;right: 5%">
+        {% if request.user == user%}
+            <button class="btn btn-danger"><a href="{% url 'user_update' id=user.id %}" style="color: whitesmoke">Chỉnh sửa thông tin cá nhân</a></button>
+            <button class="btn btn-info"><a href="{% url 'create_video' %}" style="color: whitesmoke">Đăng tải Video</a></button>
+            <button class="btn btn-danger"><a href="{% url 'change_password' %}" style="color: whitesmoke">Thay đổi mật khẩu</a></button>
+        {% endif %}
+        </div>
+    </div>
+    <div>
+    <div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px" src="{{ user.avatar.url }}">
+                <span class="font-weight-bold">{{ user.username }}</span>
+                <span class="text-black-50">{{ user.email }}</span>
+            </div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label class="labels">Firt Name</label>
+                        <input type="text" class="form-control" placeholder="first name" value="{{ user.first_name }}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Last Name</label>
+                        <input type="text" class="form-control" value="{{ user.last_name }}" placeholder="last name" readonly>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label class="labels">Sex</label>
+                        <input type="text" class="form-control" placeholder="sex" value="{% if user.sex == 1 %}Male {% else %}Female {% endif %}" readonly>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Birthday</label>
+                        <input type="text" class="form-control" placeholder="address" value="{{ user.birthday }}" readonly>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Mobile Number</label>
+                        <input type="text" class="form-control" placeholder="phone number" value="{{ user.phone_number }}" readonly>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Address Line 1</label>
+                        <input type="text" class="form-control" placeholder="address" value="{{ user.address }}" readonly>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+    </div>
+{% endblock %}

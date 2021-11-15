@@ -1,0 +1,15 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="text-center" style="margin-top: 15%">
+        <p>Bạn có chắc chắn muốn xóa {{ video }}</p>
+        <form method="post">
+            {%csrf_token %}
+            <btn class="btn btn-info"><a href="{% url 'show' id=video.id %}" style="color: whitesmoke"> Hủy </a> </btn>
+            <button class="btn btn-danger" type="submit" >Xóa</button>
+        </form>
+    </div>
+
+
+{% endblock %}

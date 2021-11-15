@@ -1,0 +1,19 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                <h2 class="text-center">Create Video</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {%csrf_token %}
+                    {{ form }}
+                    <button type="submit" class="btn btn-default ">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

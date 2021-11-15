@@ -1,0 +1,36 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block content %}
+{% if not videos %}
+    <h6 style="text-align: center"> Không tìm thấy video hợp lệ</h6>
+{% else %}
+    <div class="title-category">
+        <h5 class="name">{{ CategoryName }}</h5>
+    </div>
+    <div class="latest-products" style="padding:1rem">
+    <div class="row" >
+        {% for item in videos %}
+            <div class="col-sm-3 product-item pb-3" style="padding: 0.5rem" >
+                <a href="{% url 'show' id=item.id %}"  >
+                    <div class="thumbnail-img">
+                        <img src="{{ item.Thumbnail.url }}" alt="" />
+                    </div>
+                    <div class="down-content">
+                        <div class="row" style="margin-left: 0">
+                            <div class="col-sm-2 " style="padding: 0">
+                                <img class="rounded-circle img-thumbnail" src="{{ item.User.avatar.url }}" width="100%" >
+                            </div>
+                            <div class="col-sm-10">
+                                <h4 style="margin-bottom: 5px">{{ item.Title }}</h4>
+                                <i class="fas fa-eye"> {{ item.view }} <i>lượt xem </i></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
