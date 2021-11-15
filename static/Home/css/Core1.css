@@ -1110,3 +1110,22 @@ footer .inner-content p a {
     -ms-flex-preferred-size: auto;
     flex-basis: auto;
 }
+
+.title-category{
+    border-bottom: black 1px solid;
+    margin: 0 2.5%;
+    position: relative;
+}
+
+.title-category .name{
+    font-family:'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+.title-category .more{
+    font-family:'Poppins', sans-serif;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}

@@ -8,7 +8,7 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title text-center">Register</h2>
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="input-group">
                             <label class="label">Username</label>
@@ -79,6 +79,10 @@
                         <div class="input-group">
                             <label class="label">Address</label>
                             {{ f.address|add_class:'input--style-4' }}
+                        </div>
+                        <div class="input-group">
+                            <label class="label">Avatar</label>
+                            {{ f.avatar|add_class:'input--style-4' }}
                         </div>
                         {{ f.errors }}
                         <div class="p-t-15">

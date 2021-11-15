@@ -3,6 +3,7 @@ from django.core.validators import FileExtensionValidator
 from django.db import models
 
 # Create your models here.
+from django.http import request
 
 from Artist.models import Artist
 from User.models import CustomerUser
@@ -20,7 +21,7 @@ class Video(models.Model):
     Location = models.FileField(upload_to='Videos_Upload')
     Description = models.TextField(default='')
     Category = models.ForeignKey(Category, on_delete= models.CASCADE)
-    User = models.ForeignKey(CustomerUser, on_delete= models.DO_NOTHING , default= 1)
+    User = models.ForeignKey(CustomerUser, on_delete= models.DO_NOTHING)
     view = models.IntegerField(default=0)
     Likes = models.ManyToManyField(CustomerUser,blank=True,related_name='like_Video')
     Dislikes = models.ManyToManyField(CustomerUser,blank=True,related_name='dislike_Video')

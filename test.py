@@ -1,4 +1,6 @@
-def b1():
-    while(1):
-        i = input()
+import time
+from datetime import date
+
+a = date.today()
+print(time.strftime(''))
 

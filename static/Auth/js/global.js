@@ -8,7 +8,7 @@
             "showDropdowns": true,
             "autoUpdateInput": false,
             locale: {
-                format: 'DD/MM/YYYY'
+                format: 'YYYY-MM-DD'
             },
         });
     

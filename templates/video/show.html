@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="col-sm-9 pl-5">
-        <video id="video" width="100%" controls >
+        <video id="video" width="100%" controls autoplay >
             <source src="{{ data.Location.url }}" type="video/mp4">
         </video>
         <h4>{{ data.Title }}</h4>
@@ -11,22 +11,32 @@
             <div class="col">
                 <i class="float-left">{{ data.view }} lượt xem</i>
                 <div class="float-right">
-                    <button id="like_button" class="btn btn-light" value="{{ data.id }}" name="like"><i id="like_icon" class="far fa-thumbs-up"> {{ data.total_like }}</i> </button>
-                    <button class="btn btn-light" onclick="addview()"><i class="far fa-thumbs-down"></i> {{ data.total_dislike }} </button>
+                    <button id="like_button" class="btn btn-light" >
+                        <i id="like_icon"{% if liked %} class="fas fa-thumbs-up"{% else %} class="far fa-thumbs-up" {% endif %}> {{ data.total_like }}</i>
+                    </button>
+                    <button id="dislike_button" class="btn btn-light">
+                        <i id="dislike_icon" {% if disliked %} class="fas fa-thumbs-down"{% else %} class="far fa-thumbs-down" {% endif %}>{{ data.total_dislike }} </i>
+                    </button>
                 </div>
             </div>
         </div>
         <div class="row p-t-15" style="border-top: rgb(168,160,160) 1px solid">
             <div class="col-sm-1" style="padding: 0">
-                <a href="">
+                <a href="{% url 'userPage' user=user.username %}">
                     <img src="{{ user.avatar.url }}" class="rounded-circle img-thumbnail" alt="" >
                 </a>
             </div>
-            <div class="col-sm-10" style="display: flex;align-items: center">
-                <a href="">
+            <div class="col-sm-8" style="display: flex;align-items: center">
+                <a href="{% url 'userPage' user=user.username %}">
                     <h6 style="color: black">{{ user.username }}</h6>
                 </a>
             </div>
+            {% if request.user == user%}
+            <div class="col-sm-3" style="display: flex;align-items: center;justify-content: flex-end">
+                <button class="btn btn-info" style="margin-right: 5px"><a href="{% url 'update_video' id=data.id %}" style="color: white">Chỉnh sửa</a></button>
+                <button class="btn btn-danger"><a href="{% url 'delete_video' id=data.id %}" style="color: white">Xóa</a></button>
+            </div>
+            {% endif %}
         </div>
         <div id="description" style="margin-left: 8.333333333333332%;height: 100px; overflow: hidden">
             <span style="white-space: pre-wrap;">{{ data.Description }}</span>
@@ -62,6 +72,8 @@
     var vid = document.getElementById('video');
     var like_button = document.getElementById('like_button');
     var like_icon = document.getElementById('like_icon');
+    var dislike_button = document.getElementById('dislike_button');
+    var dislike_icon = document.getElementById('dislike_icon');
 
     vid.addEventListener("ended", function() {
         $.get('{% url "addview" id=data.id %}', function (data){
@@ -91,14 +103,20 @@
             dataType: "json",
             success: function(response) {
                 if (response === 0){
-                    alert("can dang nhap");
+                    alert("Bạn cần đăng nhập để like video");
                 }
                 else if(response === 1){
-                    alert("you disliked it");
-                }else {
-                    alert("like")
+                    $('#like_icon').attr('class','far fa-thumbs-up')
+                    like_icon.innerHTML = parseInt(like_icon.innerHTML) - 1;
+                }else if(response === 2) {
+                    $('#like_icon').attr('class','fas fa-thumbs-up');
+                    like_icon.innerHTML = parseInt(like_icon.innerHTML) + 1;
+                }else{
+                    $('#like_icon').attr('class','fas fa-thumbs-up');
+                    like_icon.innerHTML = parseInt(like_icon.innerHTML) + 1;
+                    $('#dislike_icon').attr('class','far fa-thumbs-down')
+                    dislike_icon.innerHTML = parseInt(dislike_icon.innerHTML) - 1;
                 }
-
             },
             error: function(rs, e) {
                    alert(rs.responseText);
@@ -106,6 +124,33 @@
         });
     })
 
-
+    $('#dislike_button').click(function(){
+        $.ajax({
+            type: "POST",
+            url:"{% url 'dislike' id=data.id %}",
+            data:{'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            dataType: "json",
+            success: function(response) {
+                if (response === 0){
+                    alert("Bạn cần đăng nhập để like video");
+                }
+                else if(response === 1){
+                    $('#dislike_icon').attr('class','far fa-thumbs-down')
+                    dislike_icon.innerHTML = parseInt(dislike_icon.innerHTML) - 1;
+                }else if(response ===2){
+                    $('#dislike_icon').attr('class','fas fa-thumbs-down');
+                    dislike_icon.innerHTML = parseInt(dislike_icon.innerHTML) + 1;
+                }else{
+                    $('#dislike_icon').attr('class','fas fa-thumbs-down');
+                    dislike_icon.innerHTML = parseInt(dislike_icon.innerHTML) + 1;
+                    $('#like_icon').attr('class','far fa-thumbs-up')
+                    like_icon.innerHTML = parseInt(like_icon.innerHTML) - 1;
+                }
+            },
+            error: function(rs, e) {
+                   alert(rs.responseText);
+            }
+        });
+    })
 </script>
 {% endblock %}
