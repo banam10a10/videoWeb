@@ -1,10 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
-from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -30,11 +29,17 @@ class index(View):
 class UserPage(View):
     def get(self,req,user):
         User = CustomerUser.objects.filter(username__exact=user)[0]
-        videos = Video.objects.filter(User_id__exact=User.id)
+        videos = Video.objects.filter(User_id__exact=User.id)[::-1]
+        p = Paginator(videos, 20)
+        page = req.GET.get('page')
+        pagination = p.get_page(page)
+        nums = '1' * pagination.paginator.num_pages
         context={
             'user':User,
             'video':videos,
             'img':User.avatar.url,
+            'pagination': pagination,
+            'nums': nums,
         }
         return render(req,'User/UserPage.html',context)
 
@@ -51,6 +56,7 @@ class RegisterPage(View):
             messages.success(req, 'Account was created for ' + user)
             return redirect('login')
         return render(req, 'Auth/RegisterPage.html', {'f': form})
+
 
 class LoginPage(View):
     def get(self, req):

@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-
+from django.core.paginator import Paginator
 # Create your views here.
 from django.views import View
 
@@ -118,21 +118,29 @@ class DeleteVideo(View):
 
 class CategoryVideo(View):
     def get(self,req,id):
-        videos = Video.objects.filter(Category=id).order_by("?").all()
+        # videos = Video.objects.filter(Category=id).order_by("?").all()
+        videos = Video.objects.filter(Category=id).all()[::-1]
+        p = Paginator(videos,12)
+        page = req.GET.get('page')
+        pagination = p.get_page(page)
+        nums = '1'* pagination.paginator.num_pages
         category_name = Category.objects.filter(id=id)[0].Name
         context = {
             'videos':videos,
             'CategoryName' : "Nhạc "+ category_name,
+            'pagination' : pagination,
+            'nums':nums,
         }
         return render(req,'Video/CategoryVideo.html',context)
 
 class search(View):
     def get(self,req):
         v= req.GET.get('v')
-        video = Video.objects.select_related('User').filter(Title__contains=v)
+        video = Video.objects.select_related('User').filter(Title__contains=v)[::-1]
         context = {
             'CategoryName' : 'Search : '+v,
             'videos':video,
             'v':v
         }
-        return render(req,'Video/CategoryVideo.html',context)
+        return render(req,'Video/Search.html',context)
+

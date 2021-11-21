@@ -2,7 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views
 from django.urls import path
-from User.views import index, RegisterPage, LoginPage, Logout, UserPage, UserUpdate, UserDetail, PasswordsChangeView,password_success
+from User.views import index, RegisterPage, LoginPage, Logout, UserPage, UserUpdate, UserDetail, PasswordsChangeView, \
+    password_success
 
 urlpatterns = [
     path('', index.as_view(), name='home'),

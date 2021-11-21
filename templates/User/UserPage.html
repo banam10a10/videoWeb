@@ -19,7 +19,7 @@
 
     </div>
     <div class="row" style="margin: 5px">
-        {% for item in video %}
+        {% for item in pagination %}
             <div class="col-sm-3 product-item pb-3" style="padding: 0.5rem" >
                 <a href="{% url 'show' id=item.id %}"  >
                     <div class="thumbnail-img">
@@ -40,4 +40,19 @@
             </div>
         {% endfor %}
     </div>
+    <nav aria-label="Page navigation">
+      <ul class=" justify-content-center pagination ">
+        {% if pagination.has_previous %}
+    {#        <li class="page-item" ><a class="page-link" href="?page=1"> First</a></li>#}
+            <li class="page-item"><a class="page-link" href="?page={{ pagination.previous_page_number }}">&laquo;</a></li>
+        {% endif %}
+        {% for i in nums %}
+            <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+        {% endfor %}
+        {% if pagination.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ pagination.next_page_number }}">&raquo;</a></li>
+    {#        <li class="page-item"><a class="page-link" href="?page={{ pagination.paginator.num_pages }}">Last </a></li>#}
+        {% endif %}
+      </ul>
+    </nav>
 {% endblock %}

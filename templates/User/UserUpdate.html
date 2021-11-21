@@ -6,14 +6,59 @@
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
-                <h2 class="text-center">Create Video</h2>
+                <h2 class="text-center">Update Profile</h2>
                 <form method="post" enctype="multipart/form-data">
                     {%csrf_token %}
-                    {{ form }}
-                    <button type="submit" class="btn btn-default ">Submit</button>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">Firt Name</label>
+                            {{ form.first_name| add_class:'form-control' }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Last Name</label>
+                            {{ form.last_name | add_class:'form-control' }}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Avatar</label>
+                            {{ form.avatar| add_class:'form-control' }}
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            {{ form.email | add_class:'form-control' }}
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Sex</label>
+                            {{ form.sex| add_class:'form-control' }}
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Birthday</label>
+                            <div class="input-group-icon">
+                                {{ form.birthday | add_class:'form-control'}}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Address</label>
+                            {{ form.address| add_class:'form-control' }}
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Số điện thoại</label>
+                            {{ form.phone_number| add_class:'form-control' }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary ">Submit</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script src="{% static 'Auth/vendor/jquery/jquery.min.js' %}"></script>
+<!-- Vendor JS-->
+<script src="{% static 'Auth/vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'Auth/vendor/datepicker/moment.min.js' %}"></script>
+<script src="{% static 'Auth/vendor/datepicker/daterangepicker.js' %}"></script>
+<!-- Main JS-->
+<script src="{% static 'Auth/js/global.js' %}"></script>
 {% endblock %}
