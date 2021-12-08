@@ -15,6 +15,7 @@ class Register(UserCreationForm):
         'phone_number')
         widgets = {
             'birthday': DateInput(),
+            'phone_number': forms.TextInput(attrs={'pattern':"\d{9,12}",'title':"Nhập số thuê bao từ 9 - 12 số!"}),
         }
 
 
